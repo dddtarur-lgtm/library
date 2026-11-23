@@ -142,7 +142,7 @@ export function TimelineDot({
       data-slot="timeline-dot"
       role="status"
       className={cn(
-        "col-start-2 col-end-3 row-start-1 row-end-1 flex justify-center items-center rounded-md",
+        "col-start-2 col-end-3 row-start-1 row-end-1 flex justify-center items-center rounded-md size-6",
         className
       )}
       aria-label={statusLabel}

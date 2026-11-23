@@ -1,0 +1,112 @@
+{% extends 'admin/base.html' %}
+{% load i18n unfold %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block title %}
+    {% trans 'Dashboard' %} | {{ site_title|default:_('LMS Platform HQ') }}
+{% endblock %}
+
+{% block branding %}
+    {% include "unfold/helpers/site_branding.html" %}
+{% endblock %}
+
+{% block content %}
+<div class="flex flex-col gap-6">
+    <!-- KPI Cards -->
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {% for kpi in kpis %}
+            {% component "unfold/components/card.html" %}
+                <div class="flex items-start justify-between gap-4">
+                    <div>
+                        <p class="text-xs font-medium uppercase tracking-wider text-base-500 dark:text-base-400">
+                            {{ kpi.title }}
+                        </p>
+                        <p class="mt-2 text-2xl font-bold text-base-900 dark:text-base-100">
+                            {{ kpi.value }}
+                        </p>
+                        <p class="mt-1 text-xs text-base-500 dark:text-base-400">
+                            {{ kpi.subtitle }}
+                        </p>
+                    </div>
+                    <span class="material-symbols-outlined rounded-lg bg-primary-50 p-2 text-primary-600 dark:bg-primary-950 dark:text-primary-400">
+                        {{ kpi.icon }}
+                    </span>
+                </div>
+            {% endcomponent %}
+        {% endfor %}
+    </div>
+
+    <!-- Two-Column Tables: Recent Libraries & Recent Audit Logs -->
+    <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        {% component "unfold/components/card.html" with title=_("Recent Libraries") %}
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm">
+                    <thead>
+                        <tr class="border-b border-base-200 text-xs uppercase text-base-500 dark:border-base-700 dark:text-base-400">
+                            <th class="py-2 pr-4">Code</th>
+                            <th class="py-2 pr-4">Name</th>
+                            <th class="py-2 pr-4">City</th>
+                            <th class="py-2">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-base-200 dark:divide-base-800">
+                        {% for lib in recent_libraries %}
+                            <tr>
+                                <td class="py-2.5 pr-4 font-mono text-xs font-semibold">{{ lib.code }}</td>
+                                <td class="py-2.5 pr-4 font-medium">{{ lib.name }}</td>
+                                <td class="py-2.5 pr-4 text-base-500">{{ lib.city }}</td>
+                                <td class="py-2.5">
+                                    <span class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium bg-primary-50 text-primary-700 dark:bg-primary-950 dark:text-primary-300">
+                                        {{ lib.library_status }}
+                                    </span>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="4" class="py-4 text-center text-base-500">No libraries yet.</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endcomponent %}
+
+        {% component "unfold/components/card.html" with title=_("Recent Audit Activity") %}
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm">
+                    <thead>
+                        <tr class="border-b border-base-200 text-xs uppercase text-base-500 dark:border-base-700 dark:text-base-400">
+                            <th class="py-2 pr-4">Module</th>
+                            <th class="py-2 pr-4">Action</th>
+                            <th class="py-2 pr-4">Actor</th>
+                            <th class="py-2">Risk</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-base-200 dark:divide-base-800">
+                        {% for log in recent_audits %}
+                            <tr>
+                                <td class="py-2.5 pr-4 font-medium">{{ log.module }}</td>
+                                <td class="py-2.5 pr-4 text-base-600 dark:text-base-300">{{ log.action|truncatechars:40 }}</td>
+                                <td class="py-2.5 pr-4 text-base-500">{{ log.actor.email|default:"System" }}</td>
+                                <td class="py-2.5">
+                                    {% if log.is_risky %}
+                                        <span class="inline-flex items-center rounded-full bg-red-50 px-2 py-0.5 text-xs font-medium text-red-700 dark:bg-red-950 dark:text-red-300">Risky</span>
+                                    {% else %}
+                                        <span class="inline-flex items-center rounded-full bg-emerald-50 px-2 py-0.5 text-xs font-medium text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">Normal</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="4" class="py-4 text-center text-base-500">No audit activity yet.</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endcomponent %}
+    </div>
+</div>
+{% endblock %}
+

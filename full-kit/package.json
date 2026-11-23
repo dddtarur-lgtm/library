@@ -99,6 +99,7 @@
     "react-phone-number-input": "3.4.5",
     "react-resizable-panels": "2.1.7",
     "react-use": "17.5.1",
+    "react-zoom-pan-pinch": "^4.2.0",
     "recharts": "2.15.1",
     "shiki": "3.2.1",
     "sonner": "2.0.2",

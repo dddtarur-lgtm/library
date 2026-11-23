@@ -68,11 +68,12 @@ export function PaginationLink({
 
 export function PaginationPrevious({
   className,
+  size = "default",
   ...props
 }: ComponentProps<typeof PaginationLink>) {
   return (
     <PaginationLink
-      size="default"
+      size={size}
       className={cn("gap-1 ps-2.5", className)}
       aria-label="Go to previous page"
       {...props}
@@ -85,11 +86,12 @@ export function PaginationPrevious({
 
 export function PaginationNext({
   className,
+  size = "default",
   ...props
 }: ComponentProps<typeof PaginationLink>) {
   return (
     <PaginationLink
-      size="default"
+      size={size}
       className={cn("gap-1 pe-2.5", className)}
       aria-label="Go to next page"
       {...props}

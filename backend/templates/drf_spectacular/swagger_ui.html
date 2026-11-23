@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {% block head %}
+    <title>{{ title|default:"Swagger" }}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% if favicon_href %}<link rel="icon" href="{{ favicon_href }}">{% endif %}
+    <link rel="stylesheet" href="{{ swagger_ui_css }}">
+    <style>
+      html { box-sizing: border-box; overflow-y: scroll; }
+      *, *:after, *:before { box-sizing: inherit; }
+      body { background: #fafafa; margin: 0; transition: background-color 0.2s ease; }
+
+      /* Floating Theme Toggle Button */
+      .swagger-theme-toggle {
+        position: fixed;
+        top: 12px;
+        right: 18px;
+        z-index: 9999;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 7px 14px;
+        border-radius: 9999px;
+        border: 1px solid #cbd5e1;
+        background: #ffffff;
+        color: #0f172a;
+        font-family: system-ui, -apple-system, sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.12);
+        transition: all 0.2s ease;
+      }
+      .swagger-theme-toggle:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(15, 23, 42, 0.18);
+      }
+
+      /* Dark Mode Styles */
+      html.swagger-dark body {
+        background: #0f172a;
+        color: #e2e8f0;
+      }
+      html.swagger-dark .swagger-theme-toggle {
+        background: #1e293b;
+        color: #f8fafc;
+        border-color: #334155;
+      }
+      html.swagger-dark .swagger-ui {
+        color: #e2e8f0;
+      }
+      html.swagger-dark .swagger-ui .topbar {
+        background-color: #020617;
+        border-bottom: 1px solid #1e293b;
+      }
+      html.swagger-dark .swagger-ui .info .title,
+      html.swagger-dark .swagger-ui .info h1,
+      html.swagger-dark .swagger-ui .info h2,
+      html.swagger-dark .swagger-ui .info h3,
+      html.swagger-dark .swagger-ui .info h4,
+      html.swagger-dark .swagger-ui .info p,
+      html.swagger-dark .swagger-ui .info li,
+      html.swagger-dark .swagger-ui .opblock-tag,
+      html.swagger-dark .swagger-ui .opblock-tag small,
+      html.swagger-dark .swagger-ui .opblock .opblock-summary-path,
+      html.swagger-dark .swagger-ui .opblock .opblock-summary-description,
+      html.swagger-dark .swagger-ui .opblock-description-wrapper p,
+      html.swagger-dark .swagger-ui .tab li,
+      html.swagger-dark .swagger-ui .response-col_status,
+      html.swagger-dark .swagger-ui .response-col_description,
+      html.swagger-dark .swagger-ui table thead tr td,
+      html.swagger-dark .swagger-ui table thead tr th,
+      html.swagger-dark .swagger-ui .parameter__name,
+      html.swagger-dark .swagger-ui .parameter__type,
+      html.swagger-dark .swagger-ui .model-title,
+      html.swagger-dark .swagger-ui .model,
+      html.swagger-dark .swagger-ui label {
+        color: #e2e8f0;
+      }
+      html.swagger-dark .swagger-ui .scheme-container,
+      html.swagger-dark .swagger-ui .opblock-section-header,
+      html.swagger-dark .swagger-ui section.models,
+      html.swagger-dark .swagger-ui .model-box,
+      html.swagger-dark .swagger-ui .dialog-ux .modal-ux {
+        background: #1e293b;
+        border-color: #334155;
+        color: #e2e8f0;
+      }
+      html.swagger-dark .swagger-ui .dialog-ux .modal-ux-header,
+      html.swagger-dark .swagger-ui .dialog-ux .modal-ux-content {
+        background: #1e293b;
+        color: #e2e8f0;
+        border-color: #334155;
+      }
+      html.swagger-dark .swagger-ui .opblock {
+        background: #111827;
+        border-color: #334155;
+      }
+      html.swagger-dark .swagger-ui input,
+      html.swagger-dark .swagger-ui textarea,
+      html.swagger-dark .swagger-ui select {
+        background: #0f172a;
+        color: #f8fafc;
+        border-color: #475569;
+      }
+      html.swagger-dark .swagger-ui .btn {
+        color: #e2e8f0;
+        border-color: #475569;
+      }
+      html.swagger-dark .swagger-ui .filter-container .operation-filter-input {
+        background: #1e293b;
+        color: #f8fafc;
+        border-color: #334155;
+      }
+      html.swagger-dark .swagger-ui svg {
+        fill: #cbd5e1;
+      }
+    </style>
+    <script>
+      (function () {
+        var saved = localStorage.getItem('swagger_theme');
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (saved === 'dark' || (!saved && prefersDark)) {
+          document.documentElement.classList.add('swagger-dark');
+        }
+      })();
+    </script>
+    {% endblock head %}
+  </head>
+  <body>
+    {% block body %}
+    <button id="swagger-theme-btn" class="swagger-theme-toggle" type="button" aria-label="Toggle dark and light mode">
+      <span id="swagger-theme-icon">🌙</span>
+      <span id="swagger-theme-label">Dark Mode</span>
+    </button>
+    <div id="swagger-ui"></div>
+    <script src="{{ swagger_ui_bundle }}"></script>
+    <script src="{{ swagger_ui_standalone }}"></script>
+    {% if script_url %}
+    <script src="{{ script_url }}"></script>
+    {% else %}
+    <script>
+    {% include template_name_js %}
+    </script>
+    {% endif %}
+    <script>
+      (function () {
+        var btn = document.getElementById('swagger-theme-btn');
+        var icon = document.getElementById('swagger-theme-icon');
+        var label = document.getElementById('swagger-theme-label');
+
+        function syncLabel() {
+          var isDark = document.documentElement.classList.contains('swagger-dark');
+          icon.textContent = isDark ? '☀️' : '🌙';
+          label.textContent = isDark ? 'Light Mode' : 'Dark Mode';
+        }
+
+        syncLabel();
+        btn.addEventListener('click', function () {
+          document.documentElement.classList.toggle('swagger-dark');
+          var isDark = document.documentElement.classList.contains('swagger-dark');
+          localStorage.setItem('swagger_theme', isDark ? 'dark' : 'light');
+          syncLabel();
+        });
+      })();
+    </script>
+    {% endblock %}
+  </body>
+</html>
+

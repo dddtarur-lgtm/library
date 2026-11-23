@@ -89,7 +89,7 @@ export interface NotificationType {
 export type FormatStyleType = "percent" | "duration" | "currency" | "regular"
 
 export interface NavigationType {
-  title: string
+  title?: string
   items: NavigationRootItem[]
 }
 
@@ -100,6 +100,8 @@ export type NavigationRootItem =
 export interface NavigationRootItemBasicType {
   title: string
   label?: string
+  badge?: string
+  badgeVariant?: "warning" | "primary" | "destructive" | "secondary" | "success"
   iconName: DynamicIconNameType
 }
 
@@ -121,6 +123,8 @@ export interface NavigationRootItemWithItemsType
 export interface NavigationNestedItemBasicType {
   title: string
   label?: string
+  badge?: string
+  badgeVariant?: "warning" | "primary" | "destructive" | "secondary" | "success"
 }
 
 export interface NavigationNestedItemWithHrefType

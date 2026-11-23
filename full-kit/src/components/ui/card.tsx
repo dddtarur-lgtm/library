@@ -15,7 +15,7 @@ export function Card({ className, asChild, ...props }: CardProps) {
     <Comp
       data-slot="card"
       className={cn(
-        "rounded-lg border bg-card text-card-foreground",
+        "rounded-lg border border-border bg-card text-card-foreground shadow-xs",
         className
       )}
       {...props}

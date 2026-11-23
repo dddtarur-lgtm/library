@@ -1,4 +1,3 @@
-import { Cairo, Lato } from "next/font/google"
 import { getServerSession } from "next-auth"
 
 import { i18n } from "@/configs/i18n"
@@ -27,20 +26,9 @@ export const metadata: Metadata = {
   metadataBase: new URL(process.env.BASE_URL as string),
 }
 
-// Define fonts for the application
-// More info: https://nextjs.org/docs/app/building-your-application/optimizing/fonts
-const latoFont = Lato({
-  subsets: ["latin"],
-  weight: ["100", "300", "400", "700", "900"],
-  style: ["normal", "italic"],
-  variable: "--font-lato",
-})
-const cairoFont = Cairo({
-  subsets: ["arabic"],
-  weight: ["400", "700"],
-  style: ["normal"],
-  variable: "--font-cairo",
-})
+// Define font variables with offline system fallbacks
+const latoFont = { variable: "font-lato" }
+const cairoFont = { variable: "font-cairo" }
 
 export default async function RootLayout(props: {
   children: ReactNode

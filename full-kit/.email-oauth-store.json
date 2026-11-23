@@ -1,0 +1,22 @@
+{
+  "isConnected": true,
+  "provider": "google",
+  "emailAddress": "notifications@apexstudyhub.in",
+  "displayName": "Apex Study Hub (Google Workspace)",
+  "accountType": "workspace",
+  "connectedAt": "04 Nov 2026, 05:22 pm",
+  "status": "connected",
+  "scopes": [
+    "https://www.googleapis.com/auth/gmail.send",
+    "https://www.googleapis.com/auth/userinfo.email"
+  ],
+  "encryptedRefreshToken": "7dfc06b6f692fa0169ec692376dc19e8f5b755b62937c44fa3be34bac9a3210c30df5a3e4582fd3b5867bcfefcfb66ea",
+  "encryptionIv": "a48b2d1102f657af4bf8f3088ad520cc",
+  "lastTestResult": {
+    "status": "Success",
+    "recipient": "owner.test@gmail.com",
+    "timestamp": "04 Nov 2026, 05:23 pm",
+    "latencyMs": 331,
+    "message": "250 OK: Message dispatched via Gmail API (gmail.send) to owner.test@gmail.com in 331ms."
+  }
+}

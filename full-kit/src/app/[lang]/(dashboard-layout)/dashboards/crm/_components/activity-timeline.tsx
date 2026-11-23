@@ -7,7 +7,7 @@ import { ActivityTimelineList } from "./activity-timeline-list"
 export function ActivityTimeline() {
   return (
     <DashboardCard
-      title="Activity Timeline"
+      title="Library Activity Timeline"
       period={activityTimelineData.period}
       action={
         <DatePicker

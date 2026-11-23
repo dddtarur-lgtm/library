@@ -55,6 +55,25 @@ export function SignInForm() {
     const { email, password } = data
 
     try {
+      // Authenticate with backend API to obtain and store library JWT token
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api/v1"
+      try {
+        const apiRes = await fetch(`${apiUrl.replace(/\/$/, "")}/auth/sign-in/`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        })
+        if (apiRes.ok) {
+          const apiData = await apiRes.json()
+          const access = apiData?.data?.access || apiData?.access_token || apiData?.data?.tokens?.access_token
+          if (access && typeof window !== "undefined") {
+            localStorage.setItem("library_token", access)
+          }
+        }
+      } catch (backendErr) {
+        console.warn("Backend auth error:", backendErr)
+      }
+
       const result = await signIn("credentials", {
         redirect: false,
         email,

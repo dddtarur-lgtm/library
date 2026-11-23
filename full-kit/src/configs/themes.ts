@@ -97,4 +97,28 @@ export const themes = {
       foreground: "210 20% 98%",
     },
   },
+  ocean: {
+    label: "Ocean Blue",
+    activeColor: {
+      light: "203 99% 29%",
+      dark: "202 75% 55%",
+      foreground: "0 0% 100%",
+    },
+  },
+  purple: {
+    label: "Royal Purple",
+    activeColor: {
+      light: "278 36% 36%",
+      dark: "277 45% 68%",
+      foreground: "0 0% 100%",
+    },
+  },
+  monochrome: {
+    label: "Black & White",
+    activeColor: {
+      light: "0 0% 0%",
+      dark: "0 0% 100%",
+      foreground: "0 0% 100%",
+    },
+  },
 }

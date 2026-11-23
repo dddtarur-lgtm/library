@@ -1,5 +1,3 @@
-import { Lato } from "next/font/google"
-
 import { cn } from "@/lib/utils"
 
 import "../globals.css"
@@ -23,14 +21,8 @@ export const metadata: Metadata = {
   metadataBase: new URL(process.env.BASE_URL as string),
 }
 
-// Define fonts for the application
-// More info: https://nextjs.org/docs/app/building-your-application/optimizing/fonts
-const latoFont = Lato({
-  subsets: ["latin"],
-  weight: ["100", "300", "400", "700", "900"],
-  style: ["normal", "italic"],
-  variable: "--font-lato",
-})
+// Define font variable with offline system fallback
+const latoFont = { variable: "font-lato" }
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (

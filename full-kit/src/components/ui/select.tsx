@@ -3,7 +3,7 @@
 import * as SelectPrimitive from "@radix-ui/react-select"
 import { Check, ChevronDown, ChevronUp } from "lucide-react"
 
-import type { ComponentProps } from "react"
+import { useEffect, type ComponentProps } from "react"
 
 import { cn } from "@/lib/utils"
 
@@ -91,14 +91,33 @@ export function SelectContent({
   className,
   children,
   position = "popper",
+  hideScrollButtons = false,
   ...props
-}: ComponentProps<typeof SelectPrimitive.Content>) {
+}: ComponentProps<typeof SelectPrimitive.Content> & {
+  hideScrollButtons?: boolean
+}) {
+  // Prevent react-remove-scroll (e.g. from parent Radix Dialog) from canceling wheel/touch events on portaled SelectContent
+  useEffect(() => {
+    const handleScrollAllow = (e: Event) => {
+      const target = e.target as HTMLElement | null
+      if (target?.closest?.('[data-slot="select-content"]')) {
+        e.stopImmediatePropagation()
+      }
+    }
+    window.addEventListener("wheel", handleScrollAllow, { capture: true, passive: false })
+    window.addEventListener("touchmove", handleScrollAllow, { capture: true, passive: false })
+    return () => {
+      window.removeEventListener("wheel", handleScrollAllow, { capture: true })
+      window.removeEventListener("touchmove", handleScrollAllow, { capture: true })
+    }
+  }, [])
+
   return (
     <SelectPrimitive.Portal>
       <SelectPrimitive.Content
         data-slot="select-content"
         className={cn(
-          "relative z-50 max-h-96 min-w-[8rem] overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+          "relative z-[200] max-h-72 min-w-[8rem] overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
           position === "popper" &&
             "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
           className
@@ -106,17 +125,26 @@ export function SelectContent({
         position={position}
         {...props}
       >
-        <SelectScrollUpButton />
+        {!hideScrollButtons && <SelectScrollUpButton />}
         <SelectPrimitive.Viewport
+          onWheel={(e) => {
+            e.stopPropagation()
+            if (e.defaultPrevented) {
+              e.currentTarget.scrollTop += e.deltaY
+            }
+          }}
           className={cn(
             "p-1",
             position === "popper" &&
-              "h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]"
+              "w-full min-w-[var(--radix-select-trigger-width)]",
+            hideScrollButtons
+              ? "max-h-72 overflow-y-auto theme-scrollbar"
+              : position === "popper" && "h-[var(--radix-select-trigger-height)]"
           )}
         >
           {children}
         </SelectPrimitive.Viewport>
-        <SelectScrollDownButton />
+        {!hideScrollButtons && <SelectScrollDownButton />}
       </SelectPrimitive.Content>
     </SelectPrimitive.Portal>
   )

@@ -13,14 +13,14 @@ export function InvoiceTableToolbar<TTable>({
   table,
 }: InvoiceTableToolbarProps<TTable>) {
   return (
-    <div className="flex gap-x-1.5">
+    <div className="flex gap-x-1.5 items-center">
       <InvoiceTableViewOptions table={table} />
       <Input
-        placeholder="Search by Invoice ID..."
-        className="border border-input bg-background hover:bg-accent hover:text-accent-foreground"
-        value={(table.getColumn("invoiceId")?.getFilterValue() as string) ?? ""}
+        placeholder="Search students by name..."
+        className="w-48 sm:w-64 border border-input bg-background hover:bg-accent hover:text-accent-foreground text-xs h-9"
+        value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
         onChange={(event) =>
-          table.getColumn("invoiceId")?.setFilterValue(event.target.value)
+          table.getColumn("name")?.setFilterValue(event.target.value)
         }
       />
     </div>

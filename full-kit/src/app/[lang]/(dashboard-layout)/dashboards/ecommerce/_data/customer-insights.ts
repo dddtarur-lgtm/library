@@ -1,9 +1,9 @@
 import type { CustomerInsightsType } from "../types"
 
 export const customerInsightsData: CustomerInsightsType = {
-  period: "Last month",
-  totalCustomers: 5120,
-  newCustomers: 45,
-  returningCustomers: 150,
-  vipCustomers: 320,
+  total: 1248,
+  live: 980,
+  pending: 64,
+  expired: 182,
+  suspended: 22,
 }

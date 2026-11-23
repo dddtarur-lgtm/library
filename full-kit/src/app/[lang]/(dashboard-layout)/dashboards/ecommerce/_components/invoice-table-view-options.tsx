@@ -25,13 +25,14 @@ export function InvoiceTableViewOptions<TData>({
         <Button
           variant="outline"
           size="icon"
-          className="shrink-0"
-          aria-label="View"
+          className="shrink-0 size-9 border-border/80 bg-background/50 hover:bg-background"
+          aria-label="Toggle Columns"
+          title="Toggle Columns"
         >
-          <Eye className="h-4 w-4" />
+          <Eye className="size-4" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
+      <DropdownMenuContent align="end" className="w-[160px]">
         {table
           .getAllColumns()
           .filter(
@@ -42,7 +43,7 @@ export function InvoiceTableViewOptions<TData>({
             return (
               <DropdownMenuCheckboxItem
                 key={column.id}
-                className="capitalize"
+                className="capitalize text-xs"
                 checked={column.getIsVisible()}
                 onCheckedChange={(value) => column.toggleVisibility(!!value)}
               >

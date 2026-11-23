@@ -1,28 +1,24 @@
-import type { GenderDistributionType } from "../../analytics/types"
+export interface GenderDistributionItem {
+  name: string
+  value: number
+  count: number
+  percentage: number
+  fill: string
+}
 
-export const genderDistributionData: GenderDistributionType[] = [
+export const genderDistributionData: GenderDistributionItem[] = [
   {
-    name: "Male",
-    value: 12500,
-    percentage: 0.5363,
+    name: "Boys",
+    value: 58,
+    count: 685,
+    percentage: 58,
     fill: "hsl(var(--chart-1))",
-    x: 1.75,
-    y: 3,
   },
   {
-    name: "Female",
-    value: 10000,
-    percentage: 0.4293,
-    fill: "hsl(var(--chart-2))",
-    x: 2.75,
-    y: 2,
-  },
-  {
-    name: "Other",
-    value: 800,
-    percentage: 0.0343,
-    fill: "hsl(var(--chart-3))",
-    x: 3.75,
-    y: 3.5,
+    name: "Girls",
+    value: 42,
+    count: 495,
+    percentage: 42,
+    fill: "hsl(var(--chart-5))",
   },
 ]

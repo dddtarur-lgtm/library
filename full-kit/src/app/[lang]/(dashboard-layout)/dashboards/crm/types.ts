@@ -97,6 +97,12 @@ export interface RevenueTrendType {
 }
 
 export type ActivityType =
+  | "bookIssued"
+  | "bookReturned"
+  | "seatAllocated"
+  | "feePayment"
+  | "overdueNotice"
+  | "bookCataloged"
   | "email"
   | "supportTicket"
   | "dealUpdate"

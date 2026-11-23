@@ -216,7 +216,9 @@ export function timeToDate(timeString: string, baseDate = new Date()) {
   return date
 }
 
-export function camelCaseToTitleCase(camelCaseStr: string) {
+export function camelCaseToTitleCase(camelCaseStr?: string | null) {
+  if (!camelCaseStr || typeof camelCaseStr !== "string") return ""
+
   const titleCaseStr = camelCaseStr
     .replace(/([A-Z])/g, " $1") // Insert space before uppercase letters
     .replace(/^./, (char) => char.toUpperCase()) // Capitalize the first letter
@@ -224,7 +226,9 @@ export function camelCaseToTitleCase(camelCaseStr: string) {
   return titleCaseStr
 }
 
-export function titleCaseToCamelCase(titleCaseStr: string) {
+export function titleCaseToCamelCase(titleCaseStr?: string | null) {
+  if (!titleCaseStr || typeof titleCaseStr !== "string") return ""
+
   const camelCaseStr = titleCaseStr
     .toLowerCase() // Convert the entire string to lowercase first
     .replace(/\s+(.)/g, (_, char) => char.toUpperCase()) // Remove spaces and capitalize the following character
@@ -328,14 +332,13 @@ export function formatOverviewCardValue(
 // Retrieve the dictionary value safely
 export function getDictionaryValue(
   key: string,
-  section: Record<string, unknown>
+  section: Record<string, unknown>,
+  fallback?: string
 ) {
-  const value = section[key]
+  const value = section?.[key]
 
   if (typeof value !== "string") {
-    throw new Error(
-      `Invalid dictionary value for key: ${key}. Please ensure all values are correctly set in the dictionary files.`
-    )
+    return fallback !== undefined ? fallback : key
   }
 
   return value

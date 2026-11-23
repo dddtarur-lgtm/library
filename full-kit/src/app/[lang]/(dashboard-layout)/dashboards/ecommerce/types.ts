@@ -41,26 +41,33 @@ export interface TopProductType {
 }
 
 export interface CustomerInsightsType {
-  period: string
-  totalCustomers: number
-  newCustomers: number
-  returningCustomers: number
-  vipCustomers: number
+  period?: string
+  total: number
+  live: number
+  pending: number
+  expired: number
+  suspended: number
 }
 
-export interface InvoiceType {
-  invoiceId: string
-  customerName: string
-  orderDate: string
+export interface StudentType {
+  id: string
+  studentId: string
+  name: string
+  email: string
+  phone: string
+  avatar: string
+  gender: "Male" | "Female"
+  seatNo: string
+  shift: string
+  plan: string
+  joinDate: string
   dueDate: string
-  totalAmount: number
-  deliveryStatus:
-    | "Delivered"
-    | "Shipped"
-    | "In Transit"
-    | "Processing"
-    | "Pending"
+  feeStatus: "Paid" | "Pending" | "Overdue"
+  status: "Live" | "Pending" | "Expired" | "Suspended"
+  totalFee: number
 }
+
+export type InvoiceType = StudentType
 
 export interface RevenueBySourceType {
   period: string

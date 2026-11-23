@@ -4,6 +4,7 @@ import type { NextAuthOptions } from "next-auth"
 import type { Adapter } from "next-auth/adapters"
 
 import { db } from "@/lib/prisma"
+import { userData } from "@/data/user"
 
 import CredentialsProvider from "next-auth/providers/credentials"
 
@@ -55,28 +56,44 @@ export const authOptions: NextAuthOptions = {
         if (!credentials) return null
 
         try {
-          // Authenticate the user by sending credentials to an external API
-          // Refer to the NextAuth.js documentation for handling custom sign-in flows:
-          // https://next-auth.js.org/providers/credentials
-          const res = await fetch(`${process.env.API_URL}/auth/sign-in`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              email: credentials.email,
-              password: credentials.password,
-            }),
-          })
-
-          const payload = await res.json()
-
-          // Throw error if the response status indicates a failure
-          if (res.status >= 400) {
-            throw new Error(payload?.message ?? "An unknown error occurred.")
+          // Check mock demo user credentials directly (avoids port mismatch issues)
+          if (
+            credentials.email === userData.email &&
+            credentials.password === userData.password
+          ) {
+            return {
+              id: userData.id,
+              name: userData.name,
+              email: userData.email,
+              avatar: userData.avatar,
+              status: userData.status,
+            }
           }
 
-          return payload // Return user data on successful authentication
+          // Otherwise attempt external API if API_URL is configured
+          if (process.env.API_URL) {
+            try {
+              const res = await fetch(`${process.env.API_URL}/auth/sign-in`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  email: credentials.email,
+                  password: credentials.password,
+                }),
+              })
+
+              const payload = await res.json()
+              if (res.ok && payload) {
+                return payload
+              }
+            } catch {
+              // External API error
+            }
+          }
+
+          throw new Error("Invalid email or password")
         } catch (e: unknown) {
           // Handle errors and provide appropriate error message
           throw new Error(

@@ -4,97 +4,100 @@ export const activityTimelineData: ActivityTimelineType = {
   period: "Today",
   activities: [
     {
-      type: "email",
-      iconName: "Mail",
+      type: "bookIssued",
+      iconName: "BookOpen",
       fill: "hsl(var(--chart-1))",
-      title: "Follow-up Email to John Doe",
+      title: "Book Issued: 'Introduction to Algorithms (CLRS)'",
       description:
-        "Followed up on the proposal sent last week. Awaiting response.",
-      status: "Opened",
-      date: "2025-02-27T10:30:00Z",
+        "Issued to Aarav Sharma (Card #LIB-4092) for 14 days. Due date: Nov 13, 2026.",
+      status: "Issued",
+      date: "2026-10-30T10:15:00Z",
       assignedMembers: [
         {
           name: "Emily Smith",
           avatar: "/images/avatars/female-01.svg",
           href: "/",
         },
-        {
-          name: "Michael Brown",
-          avatar: "/images/avatars/male-02.svg",
-          href: "/",
-        },
       ],
     },
     {
-      type: "supportTicket",
-      iconName: "TicketCheck",
+      type: "bookReturned",
+      iconName: "BookCheck",
       fill: "hsl(var(--chart-2))",
-      title: "Billing Discrepancy Support Ticket",
+      title: "Book Returned: 'Concepts of Physics - Vol 1'",
       description:
-        "Ticket ID: TKT-12345 - Customer reported an overcharge, issue resolved with refund processed.",
-      status: "Resolved",
-      date: "2025-02-27T11:10:00Z",
+        "Returned on time by Priya Patel (Seat #B-14). Inspected and reshelved in Rack Physics-02.",
+      status: "Returned",
+      date: "2026-10-30T11:45:00Z",
       assignedMembers: [
         {
-          name: "Emily Smith",
-          avatar: "/images/avatars/female-01.svg",
+          name: "Michael Brown",
+          avatar: "/images/avatars/male-02.svg",
           href: "/",
         },
       ],
     },
     {
-      type: "dealUpdate",
-      iconName: "DollarSign",
+      type: "seatAllocated",
+      iconName: "Armchair",
       fill: "hsl(var(--chart-3))",
-      title: "Enterprise Subscription Deal - Acme Corp",
+      title: "Seat Allocated: Study Desk #S-28",
       description:
-        "Negotiation completed. Deal closed at $50,000 annual value.",
-      status: "Closed-Won",
-      date: "2025-02-27T14:45:00Z",
+        "Reserved for Rohan Verma - 30-day quiet study zone full-day shift pass approved.",
+      status: "Allocated",
+      date: "2026-10-30T13:20:00Z",
       assignedMembers: [
         {
           name: "Sarah Johnson",
           avatar: "/images/avatars/female-02.svg",
           href: "/",
         },
-        {
-          name: "Michael Brown",
-          avatar: "/images/avatars/male-02.svg",
-          href: "/",
-        },
       ],
     },
     {
-      type: "call",
-      iconName: "Phone",
+      type: "feePayment",
+      iconName: "Receipt",
       fill: "hsl(var(--chart-4))",
-      title: "Client Call with Jane Smith",
+      title: "Library Membership Fee Received ($45.00)",
       description:
-        "15-minute call. Jane showed interest and requested a product demo.",
-      date: "2025-02-27T15:00:00Z",
+        "Monthly library reading hall subscription renewed for Ananya Gupta. RFID access renewed.",
+      status: "Paid",
+      date: "2026-10-30T14:50:00Z",
       assignedMembers: [
         {
-          name: "Michael Brown",
-          avatar: "/images/avatars/male-02.svg",
+          name: "Emily Smith",
+          avatar: "/images/avatars/female-01.svg",
           href: "/",
         },
       ],
     },
     {
-      type: "meeting",
-      fill: "hsl(var(--chart-5))",
-      iconName: "Users",
-      title: "Quarterly Planning Session - Global Tech Team",
+      type: "overdueNotice",
+      iconName: "TriangleAlert",
+      fill: "hsl(var(--destructive))",
+      title: "Overdue Notice: 'Higher Engineering Mathematics'",
       description:
-        "Discussion on quarterly goals, key initiatives, and strategic planning.",
-      status: "Completed",
-      date: "2025-02-24T13:00:00Z",
+        "Automated notice sent to Kabir Singh (Card #LIB-3180). 3 days overdue ($1.50 fine accrued).",
+      status: "Overdue",
+      date: "2026-10-30T16:10:00Z",
       assignedMembers: [
         {
           name: "John Doe",
           avatar: "/images/avatars/male-01.svg",
           href: "/",
         },
+      ],
+    },
+    {
+      type: "bookCataloged",
+      iconName: "Bookmark",
+      fill: "hsl(var(--chart-5))",
+      title: "New Arrivals Cataloged (15 Books)",
+      description:
+        "New competitive exam reference textbooks cataloged and shelved in Section C.",
+      status: "Cataloged",
+      date: "2026-10-30T17:30:00Z",
+      assignedMembers: [
         {
           name: "Michael Brown",
           avatar: "/images/avatars/male-02.svg",
@@ -103,37 +106,6 @@ export const activityTimelineData: ActivityTimelineType = {
         {
           name: "Sarah Johnson",
           avatar: "/images/avatars/female-02.svg",
-          href: "/",
-        },
-        {
-          name: "Olivia Martinez",
-          avatar: "/images/avatars/female-03.svg",
-          href: "/",
-        },
-        {
-          name: "Emily Smith",
-          avatar: "/images/avatars/female-01.svg",
-          href: "/",
-        },
-      ],
-    },
-    {
-      type: "note",
-      iconName: "FileText",
-      fill: "hsl(var(--muted-foreground))",
-      title: "Internal Note by Alice Thompson",
-      description:
-        "Client expressed interest in an upsell package. Follow-up recommended next week.",
-      date: "2025-02-27T18:20:00Z",
-      assignedMembers: [
-        {
-          name: "John Doe",
-          avatar: "/images/avatars/male-01.svg",
-          href: "/",
-        },
-        {
-          name: "Emily Smith",
-          avatar: "/images/avatars/female-01.svg",
           href: "/",
         },
       ],

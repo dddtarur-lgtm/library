@@ -72,7 +72,7 @@ export function CommandMenu({
         }
 
         e.preventDefault()
-        setOpen((open) => !open)
+        setOpen((prev) => !prev)
       }
     }
 
@@ -88,11 +88,12 @@ export function CommandMenu({
   const renderMenuItem = (item: NavigationRootItem | NavigationNestedItem) => {
     const title = getDictionaryValue(
       titleCaseToCamelCase(item.title),
-      dictionary.navigation
+      dictionary.navigation,
+      item.title
     )
     const label =
       item.label &&
-      getDictionaryValue(titleCaseToCamelCase(item.label), dictionary.label)
+      getDictionaryValue(titleCaseToCamelCase(item.label), dictionary.label, item.label)
 
     // If the item has nested items, render it with a collapsible dropdown.
     if (item.items) {
@@ -162,31 +163,38 @@ export function CommandMenu({
         <Keyboard className="ms-auto">K</Keyboard>
       </Button>
       <CommandDialog open={open} onOpenChange={setOpen} {...props}>
-        <DialogTitle className="sr-only">Search Menu</DialogTitle>
-        <CommandInput placeholder={dictionary.search.typeCommand} />
-        <CommandList>
-          <CommandEmpty>{dictionary.search.noResults}</CommandEmpty>
-          <ScrollArea className="h-[300px] max-h-[300px]">
-            {navigationsData.map((nav) => {
-              const title = getDictionaryValue(
-                titleCaseToCamelCase(nav.title),
-                dictionary.navigation
-              )
+        {open && (
+          <>
+            <DialogTitle className="sr-only">Search Menu</DialogTitle>
+            <CommandInput placeholder={dictionary.search.typeCommand} />
+            <CommandList>
+              <CommandEmpty>{dictionary.search.noResults}</CommandEmpty>
+              <ScrollArea className="h-[300px] max-h-[300px]">
+                {navigationsData.map((nav, index) => {
+                  const title = nav.title
+                    ? getDictionaryValue(
+                        titleCaseToCamelCase(nav.title),
+                        dictionary.navigation,
+                        nav.title
+                      )
+                    : ""
 
-              return (
-                <CommandGroup
-                  key={nav.title}
-                  heading={title}
-                  className="[&_[cmdk-group-items]]:space-y-1"
-                >
-                  {nav.items.map((item) => (
-                    <Fragment key={item.title}>{renderMenuItem(item)}</Fragment>
-                  ))}
-                </CommandGroup>
-              )
-            })}
-          </ScrollArea>
-        </CommandList>
+                  return (
+                    <CommandGroup
+                      key={nav.title || `group-${index}`}
+                      heading={title}
+                      className="[&_[cmdk-group-items]]:space-y-1"
+                    >
+                      {nav.items.map((item) => (
+                        <Fragment key={item.title}>{renderMenuItem(item)}</Fragment>
+                      ))}
+                    </CommandGroup>
+                  )
+                })}
+              </ScrollArea>
+            </CommandList>
+          </>
+        )}
       </CommandDialog>
     </>
   )

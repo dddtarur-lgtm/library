@@ -8,6 +8,10 @@ const nextConfig = {
   // See https://lucide.dev/guide/packages/lucide-react#nextjs-example
   transpilePackages: ["lucide-react"],
 
+  experimental: {
+    optimizePackageImports: ["lucide-react", "date-fns"],
+  },
+
   // See https://nextjs.org/docs/app/building-your-application/routing/redirecting#redirects-in-nextconfigjs
   async redirects() {
     return [
@@ -22,7 +26,7 @@ const nextConfig = {
       },
       {
         source: "/:lang",
-        destination: process.env.HOME_PATHNAME,
+        destination: process.env.HOME_PATHNAME || "/dashboards/home",
         permanent: true,
         has: [
           {
@@ -33,7 +37,7 @@ const nextConfig = {
       },
       {
         source: "/:lang",
-        destination: process.env.HOME_PATHNAME,
+        destination: process.env.HOME_PATHNAME || "/dashboards/home",
         permanent: true,
         has: [
           {

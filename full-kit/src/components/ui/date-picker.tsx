@@ -27,6 +27,7 @@ type DatePickerProps = Omit<
   buttonClassName?: string
   buttonOptions?: ComponentProps<typeof Button>
   placeholder?: string
+  modal?: boolean
 }
 
 export function DatePicker({
@@ -38,10 +39,11 @@ export function DatePicker({
   buttonClassName,
   buttonOptions,
   placeholder = "Pick date",
+  modal = false,
   ...props
 }: DatePickerProps) {
   return (
-    <Popover modal>
+    <Popover modal={modal}>
       <PopoverTrigger asChild>
         <Button
           variant="outline"
@@ -65,6 +67,9 @@ export function DatePicker({
           mode="single"
           selected={value}
           onSelect={onValueChange}
+          captionLayout="dropdown"
+          startMonth={new Date(2020, 0)}
+          endMonth={new Date(2035, 11)}
           {...props}
         />
       </PopoverContent>

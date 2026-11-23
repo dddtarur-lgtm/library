@@ -33,7 +33,7 @@ function getPreviousNext(pathname: string, navs: DocNav[]) {
 
 export function DocsPagination() {
   const pathname = usePathname()
-  const navs = flattenSidebarNavigation(sidebarNavigationData)
+  const navs = flattenSidebarNavigation(sidebarNavigationData as unknown as DocNav[])
   const { previous, next } = getPreviousNext(pathname, navs)
 
   return (

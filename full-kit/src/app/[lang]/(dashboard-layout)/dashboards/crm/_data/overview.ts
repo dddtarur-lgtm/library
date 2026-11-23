@@ -1,24 +1,18 @@
-import type { OverviewType } from "../types"
-
-export const overviewData: OverviewType = {
-  totalSales: {
-    period: "Last month",
-    value: 1234567,
-    percentageChange: 5.9,
+export const overviewData = {
+  totalRevenueMonth: {
+    title: "Total Revenue (Month)",
+    amount: "₹48,250",
   },
-  totalProfit: {
-    period: "Last month",
-    value: 345678,
-    percentageChange: -0.2,
+  totalStudents: {
+    title: "Total Students",
+    amount: "1,248",
   },
-  revenueGrowth: {
-    period: "Last month",
-    value: 789123,
-    percentageChange: 7.3,
+  remainingFeeCollection: {
+    title: "Remaining Fee Collection",
+    amount: "₹14,800",
   },
-  newCustomers: {
-    period: "Last month",
-    value: 456,
-    percentageChange: 12.4,
+  seatsAllocated: {
+    title: "Seats Allocated",
+    amount: "420 / 500",
   },
 }
